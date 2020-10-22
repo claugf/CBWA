@@ -1,17 +1,64 @@
+const uri = process.env.MONGO_URI;
+const MongoClient = require("mongodb").MongoClient;
+const DB_NAME = "book-store";
+
 module.exports = () => {
-    const authors = [
-        {id:1, name:'William Gibson'},
-        {id:2, name:'Neil Stephenson'}
-    ];
+  const get = (collectionName) => {
+    return new Promise((resolve, reject) => {
+      MongoClient.connect(
+        uri,
+        { useNewUrlParser: true, useUnifiedTopology: true },
+        (err, client) => {
+          const db = client.db(DB_NAME);
+          const collection = db.collection(collectionName);
 
-    const books = [
-        {id:1, name:'Snow Crash', author: 2},
-        {id:2, name:'Cryptonomicon', author: 2},
-        {id:3, name:'Neuromance', author: 1}
-    ];
+          collection.find({}).toArray((err, docs) => {
+            resolve(docs);
+            client.close();
+          });
+        }
+      );
+    });
+  };
 
-    return{
-        books,
-        authors
-    }
+  const add = (collectionName, item) => {
+    return new Promise((resolve, reject) => {
+      MongoClient.connect(
+        uri,
+        { useNewUrlParser: true, useUnifiedTopology: true },
+        (err, client) => {
+          const db = client.db(DB_NAME);
+          const collection = db.collection(collectionName);
+
+          collection.insertOne(item, (err, result) => {
+            resolve(result);
+          });
+        }
+      );
+    });
+  };
+
+  const count = (collectionName) => {
+    return new Promise((resolve, reject) => {
+      MongoClient.connect(
+        uri,
+        { useNewUrlParser: true, useUnifiedTopology: true },
+        (err, client) => {
+          const db = client.db(DB_NAME);
+          const collection = db.collection(collectionName);
+
+          collection.count({}, (err, docs) => {
+            resolve(docs);
+            client.close();
+          });
+        }
+      );
+    });
+  };
+
+  return {
+    get,
+    add,
+    count,
+  };
 };
