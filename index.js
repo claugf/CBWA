@@ -19,6 +19,13 @@ app.use((req, res, next) => {
 //adding body-parser instance as a middleware handler
 app.use(bodyParser.json());
 
+//  Setting root route
+app.get("/", (req, res) => {
+  res.json({
+    hello: "world",
+  });
+});
+
 //  Get all books
 app.get("/books", booksController.getController);
 //  Add a book
