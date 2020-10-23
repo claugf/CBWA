@@ -8,8 +8,8 @@ module.exports = () => {
       const authors = await db.get(COLLECTION);
       return authors;
     }
-    const authors = await db.get(COLLECTION, { id });
-    return authors;
+    const author = await db.get(COLLECTION, { id });
+    return author;
   };
 
   const add = async (name) => {

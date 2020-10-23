@@ -9,8 +9,8 @@ module.exports = () => {
       return books;
     }
 
-    const books = await db.get(COLLECTION, { id });
-    return books;
+    const book = await db.get(COLLECTION, { id });
+    return book;
   };
 
   const add = async (name, author) => {
