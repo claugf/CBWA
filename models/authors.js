@@ -8,7 +8,8 @@ module.exports = () => {
       const authors = await db.get(COLLECTION);
       return authors;
     }
-    return { error: "byId not implemented yet" };
+    const authors = await db.get(COLLECTION, { id });
+    return authors;
   };
 
   const add = async (name) => {
