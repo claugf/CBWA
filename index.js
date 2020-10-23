@@ -35,7 +35,6 @@ app.get("/authors/:id", authorsController.getById);
 
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
-  console.log(process.env.MONGO_URI);
 });
 
 //404 response
